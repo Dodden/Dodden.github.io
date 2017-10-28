@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ASTEROID</title>
+	    <link rel="stylesheet" type="text/css" href="style.css">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+<body>
+		<h3>Asteroids</h3>
+
+<!--     <div class="wrapper">
+      <h1>When are we going to see the asteroids</h1>
+      <h2>I love asteroids</h2>
+      <canvas id="myChart" width="1600" height="900"></canvas>
+
+    </div> -->
+    <canvas id="myChart" width="1600" height="900"></canvas>
+    <div id="asteroids"></div>
+	   
+	<script>
+
+		var asteroids;
+		asteroids = document.getElementById('asteroids'); 
+		asteroids.innerHTML = 'Asteroids are cool';
+		console.log("asteroids");
+
+
+        
+		var url = 'https://api.nasa.gov/neo/rest/v1/neo/3542519?api_key=a1NqhGXpZFa7odQN6Z7DjWr533rSbG0QoSshfTL7';
+		fetch(url)
+		    .then(function(response) {
+		    	return response.json();
+		    })
+
+		    .then(function(response) {
+            console.log(response.close_approach_data[0].relative_velocity) + console.log(response.close_approach_data[0].orbiting_body) + console.log(response.close_approach_data[0].close_approach_date) + console.log(response.close_approach_data[0].miss_distance);
+		    	//var list = response.close_approach_data.orbiting_body;
+		    	var list = response.close_approach_data;
+		    	//var list = response.estimated_diameter.kilometers[0].estimated_diameter_min[0];
+		    for (var i = 0; i < list.length; i++) {
+		    	console.log("nr in list" + list.length)
+		    	asteroids.innerHTML = asteroids.innerHTML + 
+		    	    '<div class="temp">Planet: ' + 
+		    		response.close_approach_data[i].orbiting_body + 
+		    		' -Velocity (km/h): ' + 
+		    		response.close_approach_data[i].relative_velocity.kilometers_per_hour + 
+		    		' -Approach date: ' + 
+		    		response.close_approach_data[i].close_approach_date + 
+		    		' -Distance (km): ' + 
+		    		response.close_approach_data[i].miss_distance.kilometers + 
+		    		'</div>'; 
+		    	}
+
+
+		    		// '<div class="temp1">Planet: ' + 
+		    		// response.close_approach_data[1].orbiting_body + 
+		    		// ' -Velocity (km/h): ' + 
+		    		// response.close_approach_data[1].relative_velocity.kilometers_per_hour + 
+		    		// ' -Approach date: ' + 
+		    		// response.close_approach_data[1].close_approach_date + 
+		    		// ' -Distance (km): ' + 
+		    		// response.close_approach_data[1].miss_distance.kilometers + 
+		    		// '</div>' + 
+		    		// '<div class="temp">Planet: ' + 
+		    		// response.close_approach_data[280].orbiting_body + 
+		    		// ' -Velocity (km/h): ' + 
+		    		// response.close_approach_data[280].relative_velocity.kilometers_per_hour + 
+		    		// ' -Approach date: ' + 
+		    		// response.close_approach_data[280].close_approach_date + 
+		    		// ' -Distance (km): ' + 
+		    		// response.close_approach_data[280].miss_distance.kilometers + 
+		    		// '</div>';
+
+		    
+		   
+
+        var x = [];
+        var y = [];
+        for (var i = 0; i < list.length; i++) {
+        		x.push(list[i].orbiting_body);
+        }
+
+        for (var i = 0; i < list.length; i++) {
+        	y.push(list[i].miss_distance.kilometers);
+        } 
+
+        console.log(list[0].orbiting_body)
+// console.log(list[i].miss_distance.kilometers)
+// console.log(list[i].orbiting_body)
+        var kilometers = [30000, 50000, 80000, 10000, 130000, 160000, 200000, 240000];
+
+		    var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: kilometers,
+    datasets: [
+      { 
+        data: x,
+        label: "planet",
+        fill: true,
+        borderColor: "#b29b01"
+      }
+      ,
+      { 
+        data: y,
+        label: "distance",
+        fill: true,
+        borderColor: "#3ce187"
+      }
+
+      ,
+      // { 
+      //   data: asia,
+      //   label: "Asia",
+      //   fill: true,
+      //   borderColor: "#e93d41"
+      // },
+      // { 
+      //   data: northAmerica,
+      //   label: "North America",
+      //   fill: true,
+      //   borderColor: "#3748e9"
+      // }
+    ]
+  }
+});
+
+ })
+// var ctx = document.getElementById("myChart");
+// var myChart = new Chart(ctx, {
+//   type: 'line',
+//   data: {
+//     labels: years,
+//     datasets: [
+//       { 
+//         data: africa,
+//         label: "Africa",
+//         fill: true,
+//         borderColor: "#b29b01"
+//       },
+//       { 
+//         data: europe,
+//         label: "Europe",
+//         fill: true,
+//         borderColor: "#3ce187"
+//       },
+//       { 
+//         data: asia,
+//         label: "Asia",
+//         fill: true,
+//         borderColor: "#e93d41"
+//       },
+//       { 
+//         data: northAmerica,
+//         label: "North America",
+//         fill: true,
+//         borderColor: "#3748e9"
+//       }
+//     ]
+//   }
+// });
+
+		    //asteroids.innerHTML + response.close_approach_data[0].orbiting_body;
+// 		    .then(function(response) {
+
+// 		    	var list = response.structure.dimensions.observation + response.dataSets.observations;
+// 		    for (var i = 0; i < list.length; i++) {
+// 		    	console.log(list.length)
+// 		    		// if (i === 1) {
+// 		    		// 	waste.innerHTML = waste.innerHTML + response.dataSets[i].observations;
+// 		    		// }}})
+
+//                     console.log(list[i])
+// 		    		asteroids.innerHTML += '<div class="temp">BEFORE: ' + 
+// 		    		response.structure.dimensions.observation[0].values[0].name + 
+// 		    		response.structure.dimensions.observation[0].values[1].name + 
+// 		    		response.structure.dimensions.observation[0].values[2].name + 
+// 		    		response.structure.dimensions.observation[0].values[3].name + 
+// 		    		response.structure.dimensions.observation[1].values[0].name + 
+// 		    		response.structure.dimensions.observation[1].values[1].name + 
+// 		    		response.structure.dimensions.observation[1].values[2].name + 
+// 		    		response.structure.dimensions.observation[1].values[3].name + 
+
+
+// 		    		' AFTER: ' + 
+// 		    		response.structure.description + 
+// 		    		'</div>' +
+// 		    		response.dataSets[0].observations['0:0:0'][0];
+// 		    		response.dataSets[0].observations['0:0:1'][0];
+// }
+// console.log(response.structure.dimensions.observation);
+// console.log(response.dataSets);
+// })
+
+                
+	</script>
+
+</body>
+</html>
